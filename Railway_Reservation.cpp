@@ -31,10 +31,10 @@ public:
     void cases(){
         int choice;
         do{
-            cout<< "\n\n\n-----------------MENU-----------------\n\n";
-            cout<< "For Ticket Booking press : 1 \n";
-            cout<< "For Cancel Ticket press : 2 \n";
-            cout<< "For Show status : 3 \n";
+            cout<< "\n\n\n ############ MENU #########\n\n";
+            cout<< "Ticket Book : 1 \n";
+            cout<< "Cancel Ticket : 2 \n";
+            cout<< " Show status : 3 \n";
             cout<< "For see Tiket Availibility : 4 \n";
             cout<< "For Exit press : 0 \n\n";
             cout<< "-----------------------------------------\n";
@@ -95,6 +95,7 @@ public:
                 seatNo = i;
                 arr[i] = 1;
                 push_back(name, age, gender,seatNo);
+                cout<<"Your Ticket No."<<i<<" is confirmed."
                 return;
             }
         }
