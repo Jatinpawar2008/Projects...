@@ -1,146 +1,131 @@
-
 #include <iostream>
 using namespace std;
 
-class Item {
+class Book {
 public:
     int code;
-    Item* left;
-    Item* right;
+    Book* left;
+    Book* right;
 
-    Item(int c) {
+    Book(int c) {
         code = c;
         left = right = NULL;
     }
 };
 
-// Add Item
-Item* addItem(Item* root, int code) {
+Book* addBook(Book* root, int code) {
     if (root == NULL)
-        return new Item(code);
+        return new Book(code);
 
     if (code < root->code)
-        root->left = addItem(root->left, code);
+        root->left = addBook(root->left, code);
     else if (code > root->code)
-        root->right = addItem(root->right, code);
+        root->right = addBook(root->right, code);
 
     return root;
 }
 
-// Find Item
-Item* findItem(Item* root, int key) {
+
+Book* findBook(Book* root, int key) {
     if (root == NULL || root->code == key)
         return root;
 
     if (key < root->code)
-        return findItem(root->left, key);
+        return findBook(root->left, key);
     else
-        return findItem(root->right, key);
+        return findBook(root->right, key);
 }
 
-// Find Minimum
-Item* findMin(Item* root) {
+
+Book* findMin(Book* root) {
     while (root && root->left != NULL)
         root = root->left;
     return root;
 }
 
-// Remove Item
-Item* removeItem(Item* root, int key) {
+
+Book* removeBook(Book* root, int key) {
     if (root == NULL) return NULL;
 
     if (key < root->code)
-        root->left = removeItem(root->left, key);
+        root->left = removeBook(root->left, key);
     else if (key > root->code)
-        root->right = removeItem(root->right, key);
+        root->right = removeBook(root->right, key);
     else {
-        // No child
+        
         if (root->left == NULL && root->right == NULL) {
             delete root;
             return NULL;
         }
-        // One child
+        
         if (root->left == NULL) {
-            Item* temp = root->right;
+            Book* temp = root->right;
             delete root;
             return temp;
         }
         if (root->right == NULL) {
-            Item* temp = root->left;
+            Book* temp = root->left;
             delete root;
             return temp;
         }
-        // Two children
-        Item* temp = findMin(root->right);
+        
+        Book* temp = findMin(root->right);
         root->code = temp->code;
-        root->right = removeItem(root->right, temp->code);
+        root->right = removeBook(root->right, temp->code);
     }
     return root;
 }
 
-// Display Inventory (Inorder)
-void showInventory(Item* root) {
-    if (root == NULL) return;
-    showInventory(root->left);
-    cout << root->code << " ";
-    showInventory(root->right);
-}
 
-// Count Items
-int countItems(Item* root) {
+
+
+int countBooks(Book* root) {
     if (root == NULL) return 0;
-    return 1 + countItems(root->left) + countItems(root->right);
+    return 1 + countBooks(root->left) + countBooks(root->right);
 }
 
 int main() {
-    Item* root = NULL;
+    Book* root = NULL;
     int choice;
 
     while (true) {
-        cout << "\n\n----===== INVENTORY CONTROL SYSTEM =====----\n";
-        cout << "1. Add Item\n";
-        cout << "2. Remove Item\n";
-        cout << "3. Search Item\n";
-        cout << "4. Show All Items\n";
-        cout << "5. Total Items Count\n";
-        cout << "6. Exit\n";
+        cout << "\n\n#### LIBRARY MANAGEMENT SYSTEM #####\n";
+        cout << "1. Add Book\n";
+        cout << "2. Remove Book\n";
+        cout << "3. Search Book\n";
+        cout << "4. Total Books Count\n";
         cout << "Enter choice: ";
         cin >> choice;
 
         if (choice == 1) {
             int x;
-            cout << "Enter Item Code: ";
+            cout << "Enter Book Code: ";
             cin >> x;
-            root = addItem(root, x);
-            cout << "Item added successfully";
+            root = addBook(root, x);
+            cout << "Book added successfully";
         }
         else if (choice == 2) {
             int x;
-            cout << "Enter Item Code: ";
+            cout << "Enter Book Code: ";
             cin >> x;
-            root = removeItem(root, x);
-            cout << "Item removed successfully";
+            root = removeBook(root, x);
+            cout << "Book removed successfully";
         }
         else if (choice == 3) {
             int x;
-            cout << "Enter Item Code to search: ";
+            cout << "Enter Book Code to search: ";
             cin >> x;
-            if (findItem(root, x))
-                cout << "Item FOUND";
+            if (findBook(root, x))
+                cout << "Book FOUND";
             else
-                cout << "Item NOT found";
+                cout << "Book NOT found";
         }
+        
         else if (choice == 4) {
-            cout << "Inventory Items: ";
-            showInventory(root);
+            cout << "Total Books: " << countBooks(root);
         }
-        else if (choice == 5) {
-            cout << "Total Items: " << countItems(root);
-        }
-        else if (choice == 6) {
-            cout << "Program Closed";
-            break;
-        }
+        
+        
         else {
             cout << "Invalid choice!";
         }
